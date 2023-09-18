@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(40,40,40);
+}
+
+#logo{
+    height: 130px; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+  .search-container{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 60vh; 
+    margin-top: 0%;
+  }
+
+  #userinput {
+    display:block;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 500px; 
+    transition: border-color 0.3s;
+  }
+
+  #userinput:focus {
+    border-color: #ff0000;
+    outline: none;
+  }
+  
+  .search-button {
+    background-color: #ff0000; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+ 
+  .search-button:hover {
+    background-color: #1e0303; 
+  }
+  

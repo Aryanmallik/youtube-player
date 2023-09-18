@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="page2.css">
+    <title>YouTube Video Player</title>
+    
+</head>
+<body>
+    <div id="header">
+        <img id="logo" src="./logo.jpg">
+    </div>
+
+    <div id="video-container">
+        
+        <iframe id="video" frameborder="0" allowfullscreen></iframe>
+        <div id="video-info">
+            <h2 id="Title"></h2>
+            <h3 id="Channel"></h3>
+            <p id="descP">click for description</p>
+        </div>
+    </div>
+</body>
+    <script>
+        var queryString1 = window.location.search;
+        var params1 = new URLSearchParams(queryString1)
+        link1 = params1.get("link1");
+
+        console.log("linksent: ",link1);
+        vidID=extractVideoId(link1);
+        getVideoTitle();    
+        var anchorElement = document.getElementById("video");
+        finalLink="https://www.youtube.com/embed/"+vidID; 
+        console.log(vidID);
+        anchorElement.setAttribute("src",finalLink );   
+      
+
+        
+        
+
+        function getVideoTitle() {
+            const apiKey = 'AIzaSyAxSgN0vhSDcAte5xme4InVsUIVeONf_wM'; 
+            const videoId = extractVideoId(link1);
+
+            if (videoId) {
+                fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${apiKey}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items.length > 0) {
+                            const title = data.items[0].snippet.title;
+                            document.getElementById('Title').innerHTML=title
+                            var channelName = data.items[0].snippet.channelTitle;
+                            console.log("name: " +channelName);
+                            document.getElementById("Channel").innerHTML = channelName;
+                            var desc = data.items[0].snippet.description;
+                            console.log("description: " +desc);
+                            var dp=document.getElementById("descP")
+                            dp.addEventListener("click", function(){
+                                document.getElementById("descP").innerHTML = desc;
+                            })
+                            } else {
+                            document.getElementById('Title').innerHTML="error 404"
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } else {
+                alert('Invalid YouTube link. Please enter a valid link.');
+            }
+        }
+        function extractVideoId(url) {
+            const regex = /[?&]v=([^&#]+)/;
+            const match = url.match(regex);
+            return match && match[1];
+        }
+
+    </script>     
+
+</html>
+    
